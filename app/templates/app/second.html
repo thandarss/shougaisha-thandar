@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dropdown columns</title>
+</head>
+<body>
+    {% extends 'app/base.html'%}
+    {% block content %}
+    <div id="div2">
+        <div id="parent1">
+            <div id="childLeft">
+                <label style="float:left; font-size:14px"> 障碍者情報 </label><br />
+                <table id="tb_info">
+                    <tr>
+                        <td id="border" class="title" rowspan="2" colspan="2">
+                            氏名
+                        </td>
+                        <td id="border" colspan="5">
+                            {{personInfos.personNameKana}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="border" colspan="5">
+                            {{personInfos.personNameKanji}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="border" class="title" rowspan="3">住所</td>
+                        <td id="border" class="title"> カナ </td>
+                        <td id="border" colspan="5"></td>
+                    </tr>
+                    <tr>
+                        <td id="border" class="title"> 漢字 </td>
+                        <td id="border" colspan="5"> {{personInfos.personAddress}}</td>
+                    </tr>
+                    <tr>
+                        <td id="border" class="title"> 方書 </td>
+                        <td id="border" colspan="5">  </td>
+                    </tr>
+                    <tr>
+                        <td id="border" colspan="2" class="title"> 生年月日</td>
+                        <td id="border" colspan="2"> {{personInfos.personBD}}  </td>
+                        <td id="border" class="title"> 統柄 </td>
+                        
+                           
+                        {% for id in relationforPerson %}                                    
+                            <td style="border: 3px solid #D0D0D0; border-right: none;"> {{id.relationshipID}} </td>
+                            <td style="border: 3px solid #D0D0D0; border-left:none"> {{id.relationshipType}} </td>                        
+                        {% endfor %}    
+                    </tr>
+                    <tr>
+                        <td id="border" colspan="2" class="title"> 職業　</td>
+
+                        <td style="border: 3px solid #D0D0D0; border-right: none;">
+                            <input type="text" id="jobIdbox"  class="textbox" readonly>
+
+                            <!-- Add Job Table as DropBox -->
+                            <div id="jobContainer" class="tableContainer">
+                                <table id="innerjobTable" class="innerTable">
+                                    <tr>
+                                        <td class="setborder" style="height:20px"></td>
+                                        <td class="setLine"></td>
+                                    </tr>
+                                    {% for id in jobID %}
+                                    <tr>
+                                        <td class="setborder"> {{id.jobID}} </td>
+                                        <td class="setLine"> {{id.jobType}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                        <td style="border: 3px solid #D0D0D0; border-left:none">
+                            <input type="text" id="jobTypebox" class="typeBox" disabled style="width:70px">
+                        </td>
+                        <td id="border" class="title"> 電話番号 </td>
+                        <td id="border" colspan="2"> {{personInfos.phoneNo}} </td>
+                    </tr>
+                    <tr>
+
+                    </tr>
+                </table>
+            </div>
+            <!--Right Table-->
+            <div id="childRight">
+                <div style="float:right">
+                    <button type="submit" class="rounded-button" style="background: linear-gradient(to bottom, #E7D75F 10%, #FFBA31 100%); padding-top: 3px;"> 個人番号表示 </button> &nbsp;
+                    <label> 宛名番号 </label>
+                    <label> {{personInfos.mailAddressNo}} </label>
+                    <label> 世帯番号 </label>
+                    <label> {{personInfos.familyId}} </label>
+                    <label> 履歴数:新規/ </label>
+                    <label>{{personInfos.noOfHistory}} </label>
+                </div>
+                <br />
+                <table id="tb_info" class="childRight">
+                    <tr style="height:1px">
+                        <td id="border" class="title" colspan="3">
+                            手帳番号
+                        </td>
+                        <td id="border" colspan="8">
+                            {{personInfos.ticketNumber}}
+                        </td>
+                    </tr>
+                    <tr style="height:1px">
+                        <td id="border" class="title" colspan="3">
+                            交付日
+                        </td>
+                        <td id="border" colspan="2">
+                            {{personInfos.issueDate}}
+                        </td>
+                        <td id="border" class="title" colspan="2">
+                            ケース番号
+                        </td>
+                        <td id="border" colspan="2">
+                            {{personInfos.caseNumber}}
+                        </td>
+                        <td id="border" align="center" colspan="2">
+                            <button type="submit" class="rounded-button" style="background-color: lightgray; width: 60px;"> 最新取得 </button>
+                        </td>
+                    </tr>
+                    <tr style="height:1px" >
+                        <td id="border" class="title" colspan="2">CHK</td>
+                        <td id="border" class="title" colspan="4"> 原傷病名 </td>
+                        <td id="border" class="title" colspan="3"> 障害部位及び程度 </td>
+                        <td id="border" class="title" colspan="2"> 陳古区分 </td>
+                    </tr>
+                    <tr>
+                        <td id="border" colspan="11"></td>
+                    </tr>
+                    <tr style="height:1px">
+                        <td id="border" class="title" colspan="3">
+                            難病情報
+                        </td>
+                        <td id="border" colspan="8">
+                            {{personInfos.diseaseInfo}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="parent2">
+            <div id="child1" style="border-spacing:0">
+                <button type="submit" id="mainbtn" class="tab-button" style="width: 60px; background-color:white" onclick="resetLayout()"> 申請情報 </button>
+                <button type="submit" class="tab-button" style="width: 85px; margin-left:-4px" onclick="changeLayout()"> 所得区分判定 </button>
+                <button type="submit" class="tab-button" style="width: 85px; margin-left: -4px" onclick="changeLayout()"> 補装具情報 </button>
+                <button type="submit" class="tab-button" style="width: 85px; margin-left: -4px" onclick="changeLayout()"> 電子ファイル </button>
+            </div>
+            <br />
+            <div id="child2">
+                <table id="tb_appInfo">
+                    <tr>
+                        <td class="title" id="border"> 対象者区分 </td>
+                        <td style="border: 3px solid #D0D0D0;; border-right: none;">
+                            <input type="text" id="targetIdbox" class="textbox" readonly>
+                            <!-- Add Target Table as DropBox -->
+                            <div id="targetContainer" class="tableContainer">
+                                <table id="innertargetTable" class="innerTable">
+                                    <tr>
+                                        <td class="setborder" style="height:20px"></td>
+                                        <td class="setLine"></td>
+                                    </tr>
+                                    {% for id in targetId %}
+                                    <tr>
+                                        <td class="setborder"> {{id.targetID}} </td>
+                                        <td class="setLine"> {{id.targetName}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                        <td style="border: 3px solid #D0D0D0; border-left:none">
+                            <input type="text" id="targetTypeBox" class="typeBox" disabled style="width:90px">
+                        </td>
+                        <td id="border" class="title"> 起案日 </td>
+                        <td id="border"> Japan Calendar </td>
+                        <td id="border" class="title"> 起案者 </td>
+                        <td style="border: 3px solid #D0D0D0;; border-right: none;">
+                            <input type="text" style="width:50px" id="draftIdbox" readonly>
+                            <!-- Add Target Table as DropBox -->
+                            <div id="draftContainer" class="tableContainer">
+                                <table id="innerdraftTable" class="innerTable">
+                                    <tr>
+                                        <td class="setborder" style="height:20px"></td>
+                                        <td class="setLine"></td>
+                                    </tr>
+                                    {% for id in draftId %}
+                                    <tr>
+                                        <td class="setborder"> {{id.draftPersonID}} </td>
+                                        <td class="setLine"> {{id.draftPersonName}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                        <td style="border: 3px solid #D0D0D0; border-left:none">
+                            <input type="text" id="draftTypeBox" class="typeBox" disabled style="width:90px">
+                        </td>
+                        <td id="border" class="title"> 管内別 </td>
+                        <td style="border: 3px solid #D0D0D0;; border-right: none;">
+                            <input type="text" id="kannaiIdbox" class="textbox" readonly>
+                            <!-- Add Target Table as DropBox -->
+                            <div id="kannaiContainer" class="tableContainer">
+                                <table id="innerKannaiTable" class="innerTable">
+                                    <tr>
+                                        <td class="setborder" style="height:20px"></td>
+                                        <td class="setLine"></td>
+                                    </tr>
+                                    {% for id in kannaiId %}
+                                    <tr>
+                                        <td class="setborder"> {{id.kannaiID}} </td>
+                                        <td class="setLine"> {{id.kannaiType}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                        <td style="border: 3px solid #D0D0D0; border-left:none">
+                            <input type="text" id="kannaiTypeBox" class="typeBox" disabled style="width:90px">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="border" class="title"> 申請事由 </td>
+                        <td style="border: 3px solid #D0D0D0; border-right: none;">
+                            <input type="text" id="reReasonIdbox" class="textbox" readonly>
+                            <!-- Add Target Table as DropBox -->
+                            <div id="reReasonContainer" class="tableContainer">
+                                <table id="innerReReasonTable" class="innerTable">
+                                    <tr>
+                                        <td class="setborder" style="height:20px"></td>
+                                        <td class="setLine"></td>
+                                    </tr>
+                                    {% for id in reReasonId %}
+                                    <tr>
+                                        <td class="setborder"> {{id.reReasonID}} </td>
+                                        <td class="setLine"> {{id.reReasonName}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                        <td style="border: 3px solid #D0D0D0; border-left:none">
+                            <input type="text" id="reReasonTypeBox" class="typeBox" disabled style="width:90px">
+                        </td>
+                        <td id="border" class="title"> 申請年月日 </td>
+                        <td id="border"> Japan Calendar </td>
+                        <td id="border" class="title"> 申請者 </td>
+                        <td style="border: 3px solid #D0D0D0; border-right: none;">
+                            <input type="text" style="width:50px" id="registerPersonIdbox" readonly>
+                            <!-- Add Target Table as DropBox -->
+                            <div id="registerPersonContainer" class="tableContainer">
+                                <table id="innerRegisterPersonTable" class="innerTable">
+                                    <tr>
+                                        <td class="setborder" style="height:20px"></td>
+                                        <td class="setLine"></td>
+                                    </tr>
+                                    {% for id in registerPersonId %}
+                                    <tr>
+                                        <td class="setborder"> {{id.registerPersonID}} </td>
+                                        <td class="setLine"> {{id.registerPersonName}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                        <td style="border: 3px solid #D0D0D0; border-left:none">
+                            <input type="text" id="registerPersonTypeBox" class="typeBox" disabled style="width:90px">
+                        </td>
+                        <td id="border" colspan="3">  </td>
+                    </tr>
+                    <tr>
+                        <td id="border" class="title"> 受理日 </td>
+                        <td id="border" colspan="2"> Japanese calendar </td>
+                        <td id="border" class="title"> 受理番号 </td>
+                        <td id="border"> accept number </td>
+                        <td id="border" class="title"> 決蔽日 </td>
+                        <td id="border" colspan="2"> japanese calendar </td>
+                        <td id="border" class="title"> ケース番号 </td>
+                        <td id="border" colspan="2"> case number </td>
+                    </tr>
+                    <tr>
+                        <td id="border" class="title"> 支払方式 </td>
+                        <td style="border: 3px solid #D0D0D0; border-right: none;">
+                            <input type="text" id="paymentIdbox" class="textbox" readonly>
+                            <!-- Add Target Table as DropBox -->
+                            <div id="paymentContainer" class="tableContainer">
+                                <table id="innerPaymentTable" class="innerTable">
+                                    <tr>
+                                        <td class="setborder" style="height:20px"></td>
+                                        <td class="setLine"></td>
+                                    </tr>
+                                    {% for id in paymentId %}
+                                    <tr>
+                                        <td class="setborder"> {{id.paymentID}} </td>
+                                        <td class="setLine"> {{id.paymentType}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                        <td style="border: 3px solid #D0D0D0; border-left:none">
+                            <input type="text" id="paymentTypeBox" class="typeBox" disabled style="width:90px">
+                        </td>
+                        <td id="border" class="title"> 決定区分 </td>
+                        <td style="border: 3px solid #D0D0D0; border-right: none;">
+                            <input type="text" id="decisionIdbox" class="textbox" readonly>
+                            <!-- Add Target Table as DropBox -->
+                            <div id="decisionContainer" class="tableContainer">
+                                <table id="innerDecisionTable" class="innerTable">
+                                    <tr>
+                                        <td class="setborder" style="height:20px"></td>
+                                        <td class="setLine"></td>
+                                    </tr>
+                                    {% for id in decisionId %}
+                                    <tr>
+                                        <td class="setborder"> {{id.decisionID}} </td>
+                                        <td class="setLine"> {{id.decisionType}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                        <td style="border: 3px solid #D0D0D0; border-left:none">
+                            <input type="text" id="decisionTypeBox" class="typeBox" disabled style="width:90px">
+                        </td>
+                        <td id="border" class="title"> 支給決定日 </td>
+                        <td id="border"> japanese calendar </td>
+                        <td id="border" class="title"> 支給番号 </td>
+                        <td id="border" colspan="2"> payment number </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="border" class="title"> 決裁用備考 </td>
+                        <td colspan="8" id="border"> remark </td>
+                        <td id="border" align="center"> <button type="submit" class="rounded-button" style="background-color: lightgray; width: 60px;"> 備考 </button> </td>
+                    </tr>
+                </table>
+            </div>
+            <br /><br />
+            <div id="child3">                
+                <label style="float:left; font-size:small">　保護者情報 </label>
+                <button type="submit" class="rounded-button" style="background: linear-gradient(to bottom, #E7D75F 10%, #FFBA31 100%); float:right; padding-top: 3px;"> 個人番号表示 </button> &nbsp;
+                <br /><br />
+                <div id="tbScroll">    
+                    <table id="tb_gurdian">
+                        <tr>
+                            <td colspan="3" class="title" id="border"> 宛名番号 </td>
+                            <td colspan="2" id="border"> gurdian ID </td>
+                            <td colspan="2" class="title" id="border"> 世帯番号 </td>
+                            <td colspan="2" id="border"> family ID </td>
+                            <td colspan="3" class="title" id="border"> 生年月日.年齢.性別 </td>
+                            <td colspan="3" id="border"> date format </td>
+                            <td colspan="2" id="border" style="border-right:none">
+                                <button type="submit" class="rounded-button" style="width:100px; background: linear-gradient(to bottom, #E7D75F 10%, #FFBA31 100%); padding-top: 3px;"> 保護者検察(F) </button> &nbsp;
+                            </td>
+                            <td colspan="3" id="border" style="border-left:none">
+                                <button type="submit" class="rounded-button" style="background-color: lightgray; width: 60px;"> クリア(C) </button> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="title" id="border" style="border-bottom:none"> 氏名 </td>
+                            <td colspan="2" class="title" id="border"> カナ </td>
+                            <td colspan="5" id="border"> kana </td>
+                            <td colspan="3" class="title" id="border"> 職業　</td>
+                            <td style="border: 3px solid #D0D0D0; border-right: none;">
+                                <input type="text" id="jobIdbox2" class="textbox" readonly>
+
+                                <!-- Add Job Table as DropBox -->
+                                <div id="jobContainer2" class="tableContainer">
+                                    <table id="innerjobTable2" class="innerTable">
+                                        <tr>
+                                            <td class="setborder" style="height:20px"></td>
+                                            <td class="setLine"></td>
+                                        </tr>
+                                        {% for id in jobID %}
+                                        <tr>
+                                            <td class="setborder"> {{id.jobID}} </td>
+                                            <td class="setLine"> {{id.jobType}} </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </td>
+                            <td colspan="2" style="border: 3px solid #D0D0D0; border-left:none">
+                                <input type="text" id="jobTypebox2" class="typeBox" disabled style="width:70px">
+                            </td>
+                            <td colspan="2" id="border"　class="title"> 電話番号　</td>
+                            <td colspan="3" id="border"> phone number........</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="title" id="border" style="border-top:none"></td>
+                            <td colspan="2" class="title" id="border"> 漢字 </td>
+                            <td colspan="5" id="border"> kanji </td>
+                            <td colspan="3" class="title" id="border"> 続柄　</td>
+                            <td style="border: 3px solid #D0D0D0; border-right: none;">
+                                <input type="text" id="relationIdbox2" class="textbox" readonly>
+
+                                <!-- Add Job Table as DropBox -->
+                                <div id="relationContainer2" class="tableContainer">
+                                    <table id="innerRelationTable2" class="innerTable">
+                                        <tr>
+                                            <td class="setborder" style="height:20px"></td>
+                                            <td class="setLine"></td>
+                                        </tr>
+                                        {% for id in relations %}
+                                        <tr>
+                                            <td class="setborder"> {{id.relationshipID}} </td>
+                                            <td class="setLine"> {{id.relationshipType}} </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </td>
+                            <td colspan="3" style="border: 3px solid #D0D0D0; border-left:none">
+                                <input type="text" id="relationTypebox2" class="typeBox" disabled style="width:70px">
+                            </td>
+                            <td colspan="4" id="border"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" id="border" class="title" style="border-bottom:none"> 住所　</td>
+                            <td colspan="2" id="border" class="title"> 〒住所　</td>
+                            <td colspan="4" id="border"> postal code </td>
+                            <td id="border"> image</td>
+                            <td colspan="11" id="border"></td>
+                        </tr>                        
+                        <tr>
+                            <td colspan="2" id="border" class="title" style="border-top:none"></td>
+                            <td colspan="2" id="border" class="title"> 方書　</td>
+                            <td colspan="16" id="border"></td>
+                        </tr>
+                    </table>            
+                </div> 
+            </div>
+        </div>
+    </div>
+    
+    <script>
+
+        //JobBox
+        document.addEventListener("DOMContentLoaded", function () {
+            var jobIdbox = document.getElementById("jobIdbox");
+            var jobContainer = document.getElementById("jobContainer");
+            var jobType = document.getElementById("jobTypebox");        
+            var innerTable = document.getElementById("innerjobTable");
+            addInputBoxListener(jobIdbox, jobContainer, jobType, innerTable);
+        });
+        //JobBox2
+        document.addEventListener("DOMContentLoaded", function () {
+            var jobIdbox = document.getElementById("jobIdbox2");
+            var jobContainer = document.getElementById("jobContainer2");
+            var jobType = document.getElementById("jobTypebox2");
+            var innerTable = document.getElementById("innerjobTable2");
+            addInputBoxListener(jobIdbox, jobContainer, jobType, innerTable);
+        });
+        ////RelationBox
+        //document.addEventListener("DOMContentLoaded", function () {
+        //    var jobIdbox = document.getElementById("relationIdbox");
+        //    var jobContainer = document.getElementById("relationContainer");
+        //    var jobType = document.getElementById("relationTypebox");
+        //    var innerTable = document.getElementById("innerRelationTable");
+        //    addInputBoxListener(jobIdbox, jobContainer, jobType, innerTable);
+        //});
+
+        //RelationBox2
+        document.addEventListener("DOMContentLoaded", function () {
+            var jobIdbox = document.getElementById("relationIdbox2");
+            var jobContainer = document.getElementById("relationContainer2");
+            var jobType = document.getElementById("relationTypebox2");
+            var innerTable = document.getElementById("innerRelationTable2");
+            addInputBoxListener(jobIdbox, jobContainer, jobType, innerTable);
+        });
+        //TargetBox
+        document.addEventListener("DOMContentLoaded", function () {
+            var targetIdbox = document.getElementById("targetIdbox");
+            var targetContainer = document.getElementById("targetContainer");
+            var targetType = document.getElementById("targetTypeBox");
+            var innerTable = document.getElementById("innertargetTable");
+            addInputBoxListener(targetIdbox, targetContainer, targetType, innerTable);
+        });
+        //DraftPersonBox
+        document.addEventListener("DOMContentLoaded", function () {
+            var targetIdbox = document.getElementById("draftIdbox");
+            var targetContainer = document.getElementById("draftContainer");
+            var targetType = document.getElementById("draftTypeBox");
+            var innerTable = document.getElementById("innerdraftTable");
+            addInputBoxListener(targetIdbox, targetContainer, targetType, innerTable);
+        });
+        //KannaiBox
+        document.addEventListener("DOMContentLoaded", function () {
+            var targetIdbox = document.getElementById("kannaiIdbox");
+            var targetContainer = document.getElementById("kannaiContainer");
+            var targetType = document.getElementById("kannaiTypeBox");
+            var innerTable = document.getElementById("innerKannaiTable");
+            addInputBoxListener(targetIdbox, targetContainer, targetType, innerTable);
+        });
+        //RegisterReasonBox
+        document.addEventListener("DOMContentLoaded", function () {
+            var targetIdbox = document.getElementById("reReasonIdbox");
+            var targetContainer = document.getElementById("reReasonContainer");
+            var targetType = document.getElementById("reReasonTypeBox");
+            var innerTable = document.getElementById("innerReReasonTable");
+            addInputBoxListener(targetIdbox, targetContainer, targetType, innerTable);
+        });
+        //RegisterPersonBox
+        document.addEventListener("DOMContentLoaded", function () {
+            var targetIdbox = document.getElementById("registerPersonIdbox");
+            var targetContainer = document.getElementById("registerPersonContainer");
+            var targetType = document.getElementById("registerPersonTypeBox");
+            var innerTable = document.getElementById("innerRegisterPersonTable");
+            addInputBoxListener(targetIdbox, targetContainer, targetType, innerTable);
+        });
+        //PaymentBox
+        document.addEventListener("DOMContentLoaded", function () {
+            var targetIdbox = document.getElementById("paymentIdbox");
+            var targetContainer = document.getElementById("paymentContainer");
+            var targetType = document.getElementById("paymentTypeBox");
+            var innerTable = document.getElementById("innerPaymentTable");
+            addInputBoxListener(targetIdbox, targetContainer, targetType, innerTable);
+        });
+        //DecisionBox
+        document.addEventListener("DOMContentLoaded", function () {
+            var targetIdbox = document.getElementById("decisionIdbox");
+            var targetContainer = document.getElementById("decisionContainer");
+            var targetType = document.getElementById("decisionTypeBox");
+            var innerTable = document.getElementById("innerDecisionTable");
+            addInputBoxListener(targetIdbox, targetContainer, targetType, innerTable);
+        });
+        //Input Box Function
+        function addInputBoxListener(Idbox, Container, Type, innerTable) {
+            Container.style.display = "none";
+            Idbox.addEventListener("focus", function () {
+                Container.style.display = "block";
+            });
+            Idbox.addEventListener("blur", function () {
+                Container.style.display = "none";
+            });
+            for (var i = 0; i < innerTable.rows.length; i++) {
+                innerTable.rows[i].addEventListener("mouseover", function () {
+                    this.style.backgroundColor = "#B9E2E8";
+                });
+                innerTable.rows[i].addEventListener("mouseout", function () {
+                    this.style.backgroundColor = "";
+                });
+                for (var j = 0; j < innerTable.rows[i].cells.length; j++) {
+                    innerTable.rows[i].cells[j].addEventListener("mouseover", function () {
+                        if ($(this).find('setLine')) {
+                            Type.value = $(this).parent().find('.setLine').text();
+                            Idbox.value = $(this).parent().find('.setborder').text();
+                        }
+                        else {
+                            Type.value = "";
+                            Idbox.value = "";
+                        }
+                    });
+                }
+            }
+        }
+
+        //Button-Tab
+        var originalLayout = document.getElementById("child2").innerHTML;
+
+        function changeLayout() {
+            var layout = document.getElementById("child2");
+            layout.innerHTML = "";
+            var button = document.getElementById("mainbtn");
+            button.style.backgroundColor = "lightgray";
+        }
+
+        function resetLayout() {
+            var layout = document.getElementById("child2");
+            layout.innerHTML = originalLayout;
+            var button = document.getElementById("mainbtn");
+            button.style.backgroundColor = "white";
+        }
+
+    </script>
+    <!-- Include the Bootstrap CSS and JavaScript files -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>障害者福祉システム</title>
+
+   
+</head>
+<body>
+    {% extends 'app/base.html'%}
+
+    {% block content %}
+    <div id="div1">
+        <div id="firstBox">
+            <label>  個人情報　</label><br />
+            <a href="{% url 'second' %}?personId=P00001">  自立支援「補装具情報」台帳（新規）</a><br />    
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

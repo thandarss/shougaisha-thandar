@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>   
+
+    <style>
+        #div1 {
+            background-color: #CCE9EE;
+            width: 92%;
+            height: 485px;
+            padding: 50px;
+        }
+
+        #firstBox {
+            background-color: #FFFFFF;
+            width: 25%;
+            height: 300px;
+            padding: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        #div2 {
+            background-color: #CCE9EE;
+            margin: 0 auto;
+            width: 99%;
+            height: 900px;
+            padding: 5px;
+        }
+
+        #parent1 {
+            display:inline-block;
+            margin: 0 auto;
+            width: 99%;
+            height: 253px;
+            padding: 5px;
+            background-color: #FFFFFF;
+            border: 2px solid lightgray;
+        }       
+
+        #childLeft {
+            display: inline;
+            width: 50%;
+            overflow: hidden;
+            height: 100%;
+            font-size: small;
+            float: left;
+        }
+
+        #childRight {
+            display: inline;
+            width: 50%;
+            overflow: hidden;
+            height: 100%;
+            font-size: small;
+            float: right;
+        }
+
+        table {
+            margin: 0;
+            padding: 0;
+        }
+
+        #parent2 {
+            margin: 0 auto;
+            width: 99%;
+            height: 440px;
+            padding: 5px;
+            background-color: #FFFFFF;
+            border: 2px solid lightgray;
+        }
+        #child1 {
+            display: inline-block;
+            width: 100%;
+            overflow: hidden;
+            font-size: small;
+            float: left;
+            background-color: #FFFFFF;
+            border: 2px solid lightgray;
+        }
+        #child2 {
+            display: inline-block;
+            width: 100%;
+            height:50%;
+            overflow: hidden;
+            font-size: small;
+        }
+        #child3 {
+            display: inline-block;
+            width: 100%;
+            height: 50%;
+            overflow: hidden;
+            font-size: small;
+        }
+        #tbScroll {
+            overflow: auto;
+            max-height: 108px;
+        }
+        #tb_info {
+            border: 1px solid #D0D0D0;
+            table-layout:fixed;
+            width: 100%;
+            height: 83%;
+            overflow:hidden;
+            border-spacing: 0;
+            border-right: 0px;
+            font-size: small;
+        }
+        #tb_appInfo {
+            border: 1px solid #D0D0D0;
+            width: 100%;
+            height: 100%;
+            overflow:hidden;
+            font-size: small;
+            table-layout: fixed;
+            border-spacing: 0;
+            border-left: 0px;
+        }
+        #tb_gurdian {
+            border: 1px solid #D0D0D0;
+            width: 100%;
+            height: 100%;
+            font-size: small;
+            table-layout: fixed;
+        }
+        tr td {
+            padding-left:5px;
+            padding-top:2px;
+        }
+        #border {
+            border: 3px solid #D0D0D0;
+        }
+
+        .title {
+            text-align: center;
+            background-color: #B9E2E8;
+            font-size: small;
+        }        
+
+        /* Style the popover content */
+        .setborder {
+            padding: 5px;
+        }
+
+        .setLine {
+            border-left: 1px solid black;
+            padding: 5px;
+        }
+
+        .textbox {
+            width: 30px;
+        }
+
+        /* Hide the table by default */
+        .tableContainer {
+            display: none;
+            position: absolute;
+            z-index: 999;
+        }
+
+        .innerTable {
+            display: table;
+            border-collapse: collapse;
+            width: auto;
+            height:auto;
+            background-color: ghostwhite;
+        }
+
+        #innerTable td, #innerTable th {
+            padding: 5px;
+        }
+
+        .rounded-button {
+            border-radius: 4px;
+            border-left-color: lightgray;
+            border-bottom-color: lightgray;
+            border-top-color: lightgray;
+            border-right-color: #B9E2E8;
+            font-size: 10px;
+        }
+
+        .tab-button {
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-left-color: lightgray;
+            border-bottom-color: lightgray;
+            border-top-color: lightgray;
+            border-right-color: #B9E2E8;
+            font-size:10px;
+            background-color: lightgray;
+            
+        }
+
+        button:hover{
+            background-color: whitesmoke;
+        }
+
+        label{
+            font-size:small;
+            font-weight:normal;
+        }
+
+        .typeBox {
+            width: 84px;
+            border: none;
+            background-color: #FFFFFF;
+        }
+
+    </style>
+</head>
+<body style="background: linear-gradient(to bottom, #2BA9D4 10%, #2152A9 100%); padding:10px">
+    {% block content %}
+    
+    {% endblock %}
+
+
+</body>
+</html>
